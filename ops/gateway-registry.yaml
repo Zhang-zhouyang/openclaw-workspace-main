@@ -1,0 +1,24 @@
+version: 1
+owner: Zhang-zhouyang
+gateways:
+  main:
+    mode: host-systemd
+    workspace_dir: /home/zhangzhouyang/.openclaw/workspace
+    workspace_repo: https://github.com/Zhang-zhouyang/openclaw-workspace-main.git
+    workspace_branch: main
+    team_work_dir: /srv/openclaw/gateways/main/team-work
+    team_repo_branch: gateway/main
+  sub1:
+    mode: docker
+    workspace_dir: /srv/openclaw/gateways/sub1/workspace
+    workspace_repo: https://github.com/Zhang-zhouyang/openclaw-workspace-sub1.git
+    workspace_branch: main
+    team_work_dir: /srv/openclaw/gateways/sub1/team-work
+    team_repo_branch: gateway/sub1
+  sub2:
+    mode: docker
+    workspace_dir: /srv/openclaw/gateways/sub2/workspace
+    workspace_repo: https://github.com/Zhang-zhouyang/openclaw-workspace-sub2.git
+    workspace_branch: main
+    team_work_dir: /srv/openclaw/gateways/sub2/team-work
+    team_repo_branch: gateway/sub2
