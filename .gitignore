@@ -1,3 +1,6 @@
 .openclaw/
 *.log
 *.tmp
+
+__pycache__/
+**/__pycache__/
