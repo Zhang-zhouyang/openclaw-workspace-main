@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
+export GIT_TERMINAL_PROMPT=0
+GIT_TIMEOUT="${GIT_TIMEOUT:-90}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
@@ -50,24 +52,24 @@ main() {
     exit 0
   }
 
-  git -C "$repo_dir" fetch origin --prune
+  timeout "$GIT_TIMEOUT" git -C "$repo_dir" fetch origin --prune
 
   if git -C "$repo_dir" show-ref --quiet "refs/remotes/origin/$branch"; then
-    git -C "$repo_dir" checkout -B "$branch" "origin/$branch"
+    timeout "$GIT_TIMEOUT" git -C "$repo_dir" checkout -B "$branch" "origin/$branch"
   else
-    git -C "$repo_dir" checkout -B "$branch"
+    timeout "$GIT_TIMEOUT" git -C "$repo_dir" checkout -B "$branch"
   fi
 
   if git -C "$repo_dir" show-ref --quiet "refs/remotes/origin/main"; then
-    git -C "$repo_dir" rebase "origin/main" || {
-      git -C "$repo_dir" rebase --abort || true
+    timeout "$GIT_TIMEOUT" git -C "$repo_dir" rebase "origin/main" || {
+      timeout "$GIT_TIMEOUT" git -C "$repo_dir" rebase --abort || true
       echo "Rebase against origin/main failed for $name" >&2
       exit 1
     }
   fi
 
   if git -C "$repo_dir" show-ref --quiet "refs/remotes/origin/$branch"; then
-    git -C "$repo_dir" pull --rebase origin "$branch"
+    timeout "$GIT_TIMEOUT" git -C "$repo_dir" pull --rebase origin "$branch"
   fi
 
   echo "Synced team-work repo for $name on branch $branch"
