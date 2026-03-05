@@ -70,4 +70,5 @@
   - 汇报文档已按新模式覆盖。
   - systemd 同步服务路径已迁移。
 - 待最终收口：
-  - 删除本地/远端 `openclaw-multi-agent-workspace`（已不再被运行链路引用）。
+  - `openclaw-multi-agent-workspace` 本地目录已删除。
+  - 远端仓库删除需 `gh` token 增加 `delete_repo` scope 后执行。
